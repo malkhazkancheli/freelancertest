@@ -1,0 +1,21 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Images: API generate",
+      "type": "shell",
+      "command": "swagger generate server -A images -f ./swagger.yaml",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Images: API build",
+      "type": "shell",
+      "command": "go build ./cmd/images-server/main.go",
+      "group": "build",
+      "problemMatcher": []
+    },
+  ]
+}

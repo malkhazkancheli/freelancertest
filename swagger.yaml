@@ -1,0 +1,101 @@
+swagger: "2.0"
+info:
+  description: Kviky images service API
+  title: Images API
+  version: 1.0.0
+  contact: {}
+host: 127.0.0.1:3001
+basePath: /
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+
+
+paths:
+  /subscription-data/{ueId}/authentication-data/authentication-subscription:
+    get:
+      description: Retrieves the authentication subscription data of a UE
+      summary: QueryAuthSubsData
+      tags:
+      - AuthData
+      operationId: QueryAuthSubsData
+      produces:
+      - application/json
+      parameters:
+      - name: ueId
+        in: path
+        required: true
+        type: string
+        pattern: ^(imsi-[0-9]{5,15}|nai-.+|msisdn-[0-9]{5,15}|extid-[^@]+@[^@]+|.+)$
+        description: UE id
+      responses:
+        200:
+          description: Expected response to a valid request
+          schema:
+            $ref: '#/definitions/AuthenticationSubscription'
+          headers: {}
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/responses/DefaultError'
+
+responses:
+  DefaultError:
+    description: Error response, problem details
+    schema:
+      $ref: '#/definitions/ProblemDetails'
+
+
+definitions:
+  AuthenticationSubscription:
+    title: AuthenticationSubscription
+    type: object
+    properties:
+      authenticationMethod:
+        type: string
+        enum:
+          - 5G_AKA
+          - EAP_AKA_PRIME
+      encPermanentKey:
+        type: string
+      protectionParameterId:
+        type: string
+      authenticationManagementField:
+        type: string
+        pattern: ^[A-Fa-f0-9]{4}$
+      algorithmId:
+        type: string
+      encOpcKey:
+        type: string
+      encTopcKey:
+        type: string
+    required:
+    - authenticationMethod
+
+  ProblemDetails:
+    title: ProblemDetails
+    description: ProblemDetails is a default error object, RFC - https://tools.ietf.org/html/rfc7807
+    type: object
+    properties:
+      type:
+        description: URI of the resource
+        type: string
+      title:
+        description: Human readable title of error
+        type: string
+      status:
+        description: HTTP status code
+        type: integer
+        format: int32
+      detail:
+        description: Human readable description/detail of error
+        type: string
+      instance:
+        description: Instance where error occured
+        type: string
+      code:
+        description: Human readable HTTP code explanation
+        type: string

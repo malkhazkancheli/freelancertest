@@ -1,0 +1,7 @@
+vendor/*
+restapi/*
+!restapi/configure_api.go
+models/*
+cmd/
+./main.exe
+./main.ex*

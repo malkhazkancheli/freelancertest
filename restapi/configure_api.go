@@ -41,37 +41,6 @@ func configureAPI(api *operations.APIAPI) http.Handler {
 
 
 	api.AuthDataQueryAuthSubsDataHandler=auth_data.QueryAuthSubsDataHandlerFunc(controllers.QueryAuthSubsDataHandlerFunc)
-		//api.AuthDataQueryAuthSubsDataHandler = auth_data.QueryAuthSubsDataHandlerFunc(func(params auth_data.QueryAuthSubsDataParams) middleware.Responder {
-		//
-		//
-		//
-		//		//
-		//		//problemdetails := models.ProblemDetails{
-		//		//	Code:     http.StatusText(http.StatusNotAcceptable),
-		//		//	Detail:   "ueid format is not acceptable. ",
-		//		//	Instance: params.HTTPRequest.RequestURI,
-		//		//	Status:   http.StatusNotAcceptable,
-		//		//	Title:    "Validation error",
-		//		//	Type:     "",
-		//		//}
-		//		//return auth_data.NewQueryAuthSubsDataDefault(int(problemdetails.Status)).WithPayload(problemdetails)
-		//
-		//
-		//	payload := &models.AuthenticationSubscription{
-		//		AlgorithmID:                   "test AlgorithmID",
-		//		AuthenticationManagementField: "test AuthenticationManagementField",
-		//		AuthenticationMethod:          swag.String("test AuthenticationMethod"),
-		//		EncOpcKey:                     "test EncOpcKey",
-		//		EncPermanentKey:               "test EncPermanentKey",
-		//		EncTopcKey:                    "test EncTopcKey",
-		//		ProtectionParameterID:         "test ProtectionParameterID",
-		//	}
-		//
-		//	return auth_data.NewQueryAuthSubsDataOK().WithPayload(payload)
-		//
-		//
-		//
-		//})
 
 
 	api.PreServerShutdown = func() {}

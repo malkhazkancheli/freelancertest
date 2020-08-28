@@ -1,15 +1,17 @@
 package controllers
 
 import (
-	"freelancertest/services/auth"
-
-	"github.com/go-openapi/runtime/middleware"
-
 	"freelancertest/restapi/operations/auth_data"
+	"freelancertest/services/auth"
+	"github.com/go-openapi/runtime/middleware"
 )
 
 // QueryAuthSubsDataHandlerFunc handles GET /subscription-data/{ueId}/authentication-data/authentication-subscription
 func QueryAuthSubsDataHandlerFunc(params auth_data.QueryAuthSubsDataParams) middleware.Responder {
+
+
+
+
 
 	service := auth.NewAuthenticationSubscriptionService()
 

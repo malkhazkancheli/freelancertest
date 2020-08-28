@@ -4,14 +4,12 @@ package restapi
 
 import (
 	"crypto/tls"
+	"freelancertest/controllers"
+	"freelancertest/restapi/operations/auth_data"
 	"net/http"
 
-	"github.com/go-openapi/errors"
-	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/runtime/middleware"
-
 	"freelancertest/restapi/operations"
-	"freelancertest/restapi/operations/auth_data"
+	"github.com/go-openapi/runtime"
 )
 
 //go:generate swagger generate server --target ..\..\freelancer --name API --spec ..\swagger.yaml --principal interface{}
@@ -22,7 +20,10 @@ func configureFlags(api *operations.APIAPI) {
 
 func configureAPI(api *operations.APIAPI) http.Handler {
 	// configure the api here
-	api.ServeError = errors.ServeError
+	//api.ServeError = errors.ServeError
+	api.ServeError = ServeError			//I've changed the handler to my custom handler
+										// to support ProblemDetails structure
+
 
 	// Set your custom logger if needed. Default one is log.Printf
 	// Expected interface func(string, ...interface{})
@@ -38,11 +39,40 @@ func configureAPI(api *operations.APIAPI) http.Handler {
 
 	api.JSONProducer = runtime.JSONProducer()
 
-	if api.AuthDataQueryAuthSubsDataHandler == nil {
-		api.AuthDataQueryAuthSubsDataHandler = auth_data.QueryAuthSubsDataHandlerFunc(func(params auth_data.QueryAuthSubsDataParams) middleware.Responder {
-			return middleware.NotImplemented("operation auth_data.QueryAuthSubsData has not yet been implemented")
-		})
-	}
+
+	api.AuthDataQueryAuthSubsDataHandler=auth_data.QueryAuthSubsDataHandlerFunc(controllers.QueryAuthSubsDataHandlerFunc)
+		//api.AuthDataQueryAuthSubsDataHandler = auth_data.QueryAuthSubsDataHandlerFunc(func(params auth_data.QueryAuthSubsDataParams) middleware.Responder {
+		//
+		//
+		//
+		//		//
+		//		//problemdetails := models.ProblemDetails{
+		//		//	Code:     http.StatusText(http.StatusNotAcceptable),
+		//		//	Detail:   "ueid format is not acceptable. ",
+		//		//	Instance: params.HTTPRequest.RequestURI,
+		//		//	Status:   http.StatusNotAcceptable,
+		//		//	Title:    "Validation error",
+		//		//	Type:     "",
+		//		//}
+		//		//return auth_data.NewQueryAuthSubsDataDefault(int(problemdetails.Status)).WithPayload(problemdetails)
+		//
+		//
+		//	payload := &models.AuthenticationSubscription{
+		//		AlgorithmID:                   "test AlgorithmID",
+		//		AuthenticationManagementField: "test AuthenticationManagementField",
+		//		AuthenticationMethod:          swag.String("test AuthenticationMethod"),
+		//		EncOpcKey:                     "test EncOpcKey",
+		//		EncPermanentKey:               "test EncPermanentKey",
+		//		EncTopcKey:                    "test EncTopcKey",
+		//		ProtectionParameterID:         "test ProtectionParameterID",
+		//	}
+		//
+		//	return auth_data.NewQueryAuthSubsDataOK().WithPayload(payload)
+		//
+		//
+		//
+		//})
+
 
 	api.PreServerShutdown = func() {}
 

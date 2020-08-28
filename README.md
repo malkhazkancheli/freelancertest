@@ -33,13 +33,13 @@ There is one /GET request defined in the swagger, what should be available throu
 ## Tasks
 
 Create dummy API service based on the swagger.yaml specification with following parameters:
-- Create active /GET route based on definition in swagger.yaml
-- Valid /GET request should return HTTP status 200 and data type AuthenticationSubscription in response
-- Invalid /GET request should return HTTP status 400 and data type ProblemDetails
+- Create active /GET route based on definition in swagger.yaml `Malkhaz: Done`
+- Valid /GET request should return HTTP status 200 and data type AuthenticationSubscription in response `Malkhaz: Done for the dummy response, if searching from db, we can use the ProblemDetails structure`
+- Invalid /GET request should return HTTP status 400 and data type ProblemDetails `Malkhaz: Done - I've created a custom error_handler to replace swagger default error structure, and now all errors will be as ProblemDetails`
 
 Bonus points:
-- ProblemDetails should follow https://tools.ietf.org/html/rfc7807
-- Identify and use the valid `imsi-` value of {ueId} parameter by it's swagger pattern
+- ProblemDetails should follow https://tools.ietf.org/html/rfc7807 `Malkhaz: For this particular task, I couldn't find a suitable use case, because there are not enough error, but it's easy to implement for the real project.`
+- Identify and use the valid `imsi-` value of {ueId} parameter by it's swagger pattern `Malkhaz: Already done by swagger, but as I checked, the pattern specified in the swagger.yaml file, also accepts all character, to meet the required validation, we should change the pattern to:  ^(imsi-[0-9]{5,15}|nai-.+|msisdn-[0-9]{5,15}|extid-[^@]+@[^@]+)$ or even  ^(imsi-[0-9]{5,15})$ `
 
 
 ### Codebase

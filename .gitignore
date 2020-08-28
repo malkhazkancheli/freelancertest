@@ -5,3 +5,7 @@ models/*
 cmd/
 ./main.exe
 ./main.ex*
+main.exe
+go.mod
+go.sum
+.idea

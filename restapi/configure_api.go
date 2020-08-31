@@ -21,7 +21,7 @@ func configureFlags(api *operations.APIAPI) {
 func configureAPI(api *operations.APIAPI) http.Handler {
 	// configure the api here
 	//api.ServeError = errors.ServeError
-	api.ServeError = ServeError			//I've changed the handler to my custom handler
+	api.ServeError = controllers.ServeError //I've changed the handler to my custom handler
 										// to support ProblemDetails structure
 
 
